@@ -2,20 +2,22 @@
 using EnergyControllerApi.Core.DataReferenceClasses;
 using EnergyControllerApi.Core.Dtos.Commands;
 using EnergyControllerApi.Core.ProductionPlans;
+using EnergyControllerApi.Infrastructure;
 using System.Text.Json;
 
 namespace EnergyControllerApi.Integration.CommandHandlers
 {
     public class CalculateProductionPlanCommandHandler : ICommandHandler<CalculateProductionPlanCommand, IEnumerable<PowerPlantProductionPlan>>
     {
+        public PowerPlanService PowerPlanService { get; set; }
+        public CalculateProductionPlanCommandHandler(PowerPlanService powerPlanService) => PowerPlanService = powerPlanService;
+
         public CommandResult<IEnumerable<PowerPlantProductionPlan>> Execute(CalculateProductionPlanCommand command)
         {
             var errors = Validate(command);
             if (errors.Any()) return CommandResult<IEnumerable<PowerPlantProductionPlan>>.Error(errors);
 
-            var powerPlans = Enumerable.Range(1, 5)
-                .Select(index => new PowerPlantProductionPlan($"plant{index}", Random.Shared.Next(0, (int)command.Load)))
-                .ToArray();
+            var powerPlans = PowerPlanService.AssignPowerForLoad(command.Load, command.Fuels, command.PowerPlants);
             return CommandResult<IEnumerable<PowerPlantProductionPlan>>.Success(powerPlans);
         }
 
