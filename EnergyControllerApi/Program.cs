@@ -9,6 +9,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSeriLogging();
+builder.Services.AddIntegration();
 
 
 var app = builder.Build();
