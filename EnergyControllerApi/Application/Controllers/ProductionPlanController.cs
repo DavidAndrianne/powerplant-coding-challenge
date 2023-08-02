@@ -15,6 +15,7 @@ namespace EnergyControllerApi.Controllers
         [HttpPost]
         public IEnumerable<PowerPlantProductionPlan> Post(CalculateProductionPlanCommand command)
         {
+            _logger.LogInformation($"Calculating plan for {command.Load} load");
             return Enumerable.Range(1, 5)
                 .Select(index => new PowerPlantProductionPlan($"plant{index}", Random.Shared.Next(0, (int)command.Load)))
                 .ToArray();
