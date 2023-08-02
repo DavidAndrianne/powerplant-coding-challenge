@@ -1,7 +1,9 @@
-﻿namespace EnergyControllerApi.Integration
+﻿using EnergyControllerApi.Core.Dtos.Commands;
+
+namespace EnergyControllerApi.Integration
 {
-    public interface ICommandHandler<in TArgs, out TResult>
+    public interface ICommandHandler<in TArgs, TResult>
     {
-        TResult Execute(TArgs command);
+        CommandResult<TResult> Execute(TArgs command);
     }
 }

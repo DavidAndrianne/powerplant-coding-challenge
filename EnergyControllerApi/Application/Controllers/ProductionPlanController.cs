@@ -1,3 +1,4 @@
+using EnergyControllerApi.Application.Controllers;
 using EnergyControllerApi.Core.Commands;
 using EnergyControllerApi.Core.ProductionPlans;
 using EnergyControllerApi.Integration;
@@ -7,20 +8,20 @@ namespace EnergyControllerApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ProductionPlanController : ControllerBase
+    public class ProductionPlanController : EnergyBaseController<ProductionPlanController>
     {
-        private readonly ILogger<ProductionPlanController> _logger;
-
-        public ProductionPlanController(ILogger<ProductionPlanController> logger) => _logger = logger;
+        public ProductionPlanController(ILogger<ProductionPlanController> logger) : base(logger) { }
 
         [HttpPost]
-        public IEnumerable<PowerPlantProductionPlan> Post(
+        public ActionResult<IEnumerable<PowerPlantProductionPlan>> Post(
             CalculateProductionPlanCommand command, 
             [FromServices] ICommandHandler<CalculateProductionPlanCommand, IEnumerable<PowerPlantProductionPlan>> commandHandler
             )
         {
             _logger.LogInformation($"Calculating plan for {command.Load} load");
-            return commandHandler.Execute(command);
+            var result = commandHandler.Execute(command);
+            if (result.Errors.Any()) return ReturnErrors(result);
+            return Ok(result.Result);
         }
     }
 }
