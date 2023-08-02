@@ -7,7 +7,7 @@
 ## Build & run the application
 
 #### Commandline
-dotnet run .
+dotnet run EnergyControllerApi
 
 ## Test the application
 See swagger documentation at https://localhost:8888/swagger
