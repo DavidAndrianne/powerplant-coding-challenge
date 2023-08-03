@@ -11,8 +11,8 @@
 dotnet run EnergyControllerApi
 
 #### B. Docker (CLI)
-docker build . -f .\EnergyControllerApi\Dockerfile -t energycontroller:dandrianne
-docker run -it -p 8888:80 energycontroller:dandrianne
+- docker build . -f .\EnergyControllerApi\Dockerfile -t energycontroller:dandrianne
+- docker run -it -p 8888:80 energycontroller:dandrianne
 
 ## Test the application
 See swagger documentation at https://localhost:8888/swagger
