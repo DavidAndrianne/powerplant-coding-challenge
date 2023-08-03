@@ -11,7 +11,7 @@
 dotnet run .
 
 #### B. Docker (CLI)
-docker build . -f .\EnergyControllerApi\Dockerfile -t energycontroller:dandrianne
+cd .. && docker build . -f .\EnergyControllerApi\Dockerfile -t energycontroller:dandrianne
 docker run -it -p 8888:80 energycontroller:dandrianne
 
 ## Test the application
