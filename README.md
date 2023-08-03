@@ -8,7 +8,7 @@
 ## Build & run the application
 
 #### A. dotnet commandline
-dotnet run .
+dotnet run EnergyControllerApi
 
 #### B. Docker (CLI)
 docker build . -f .\EnergyControllerApi\Dockerfile -t energycontroller:dandrianne
