@@ -15,7 +15,7 @@ namespace EnergyControllerApi.Infrastructure
             return orderedSources
                .Select(p => {
                    var plantPower = p.CalculatePower(remainingLoad);
-                   remainingLoad -= p.CalculateOffloadInMw(plantPower);
+                   remainingLoad -= plantPower;
                    return new PowerPlantProductionPlan(p.Name, plantPower);
                    })
                .ToArray();

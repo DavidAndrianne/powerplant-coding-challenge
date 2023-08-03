@@ -21,17 +21,12 @@ namespace EnergyControllerApi.Core.Domain
             Fuelprice = fuelprice;
         }
 
-        public virtual decimal CalculatePower(decimal desiredLoad)
+        public virtual decimal CalculatePower(decimal desiredPower)
         {
-            var power = desiredLoad / Efficiency;
-            if (power < PMin) return PMin;
-            if (power > PMax) return PMax;
-            return power;
-        }
-
-        public virtual decimal CalculateOffloadInMw(decimal power)
-        {
-            return power * Efficiency;
+            if (desiredPower == 0) return 0M; // no need for further power
+            if (desiredPower < PMin) return PMin; // can't go below minimum power
+            if (desiredPower > PMax) return PMax; // can't exceed max power
+            return desiredPower;
         }
     }
 }
